@@ -1,6 +1,9 @@
 const app = require('./app.js');
 const sequelize = require('./database/database.js');
 
+// models
+require('./models/indexModels.js')
+
 const Main = async () => {
     try {
         // connecting database
