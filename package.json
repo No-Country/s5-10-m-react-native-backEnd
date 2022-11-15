@@ -4,6 +4,8 @@
   "description": "create a cv for junior",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,5 +28,8 @@
     "sequelize": "^6.25.5",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
