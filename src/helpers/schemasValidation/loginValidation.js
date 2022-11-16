@@ -11,7 +11,6 @@ const validationLogin = checkSchema({
     exists: { options: { checkFalsy: true } },
     bail: true,
     isString: true,
-    matches: {options: /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/},
     errorMessage: 'Enter valid password'
   }
 });
