@@ -7,7 +7,7 @@ require('./models/indexModels.js')
 const Main = async () => {
     try {
         // connecting database
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
       console.log("Connection has been established successfully.");
         // connecting server   
       app.listen(app.get("PORT"));
