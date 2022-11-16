@@ -11,7 +11,7 @@ const validationMiddleware = (schema) => {
           
         //   if there is error return a error
   
-          return res.status(404).json(errorsArray);
+          return res.status(400).json(errorsArray);
         }
         // if doesn't exist error, continue
         next()
