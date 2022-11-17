@@ -5,7 +5,7 @@ const validateToken = async (req, res, next) => {
   const token = req.headers['x-access-token']
     try {
         if(!token){
-            return res.status(403).json({status: false, message: "token valido"})
+            return res.status(403).json({status: false, message: "token inválido"})
         }
         const verifyToken = jwt.verify(token, process.env.SECRETKEY)
 
