@@ -6,7 +6,7 @@ const register = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
     const existUser = await User.findOne({ where: { email } });
-  
+
     if (existUser) {
       res.json({
         status: 'failed',
@@ -18,16 +18,18 @@ const register = async (req, res) => {
         email,
         password: await encryptPw(password)
       });
+
       await user.save();
+
       res.json({
-        status: 'success',
+        status: true,
         message: 'Usuario creado',
         token: jwt.sign(email, process.env.SECRETKEY)
       });
     }
   } catch (error) {
     res.json({
-      status: 'failer',
+      status: false,
       message: error.message
     })
   }
