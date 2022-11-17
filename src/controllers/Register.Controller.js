@@ -1,5 +1,6 @@
 const { encryptPw } = require('../helpers/bcrypt');
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
   try {
@@ -17,10 +18,11 @@ const register = async (req, res) => {
         email,
         password: await encryptPw(password)
       });
-      const newUser = await user.save();
+      await user.save();
       res.json({
         status: 'success',
-        message: 'Usuario creado'
+        message: 'Usuario creado',
+        token: jwt.sign(email, process.env.SECRETKEY)
       });
     }
   } catch (error) {
