@@ -1,5 +1,5 @@
 require('dotenv').config();
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
   process.env.DB_NAME || "cv",
@@ -8,12 +8,12 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: 'mysql',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false // <<<<<<< YOU NEED THIS
-      }
-    },
+    // dialectOptions: {
+    //   ssl: {
+    //     require: true,
+    //     rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+    //   }
+    // },
   }
 );
 
