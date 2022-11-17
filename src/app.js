@@ -1,6 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors')
+// swagger
+const swaggerUi = require('swagger-ui-express')
+const { swaggerSetup } = require('./helpers/swagger.js')
 
 const app = express();
 
@@ -15,6 +18,11 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors());
 
 // custom midddleware
+app.use(
+    '/api/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSetup)
+  )
 
 // routes
 
