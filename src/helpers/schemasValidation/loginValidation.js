@@ -5,13 +5,13 @@ const validationLogin = checkSchema({
     exists: { options: { checkFalsy: true } },
     bail: true,
     isEmail: true,
-    errorMessage: 'Enter valid email'
+    errorMessage: 'Email inválido'
   },
   password: {
     exists: { options: { checkFalsy: true } },
     bail: true,
     isString: true,
-    errorMessage: 'Enter valid password'
+    errorMessage: 'Contraseña inválida'
   }
 });
 
