@@ -6,13 +6,8 @@ const { transporter, mailOptions } = require('../helpers/nodemailer');
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-
-    if (!email) res.json({
-      status: false,
-      message: 'Por favor ingrese un email'
-    })
-
     const user = await User.findOne({ where: { email } });
+
     if (!user) res.json({
       status: false,
       message: 'El usuario no se encuentra registrado'
@@ -45,15 +40,6 @@ const resetPassword = async (req, res) => {
   try {
     const { resetToken } = req.params;
     const { password } = req.body;
-
-    if (!resetToken) res.json({
-      status: false,
-      message: 'No se recibió el token, solicite otro link de verificación'
-    });
-    if(!password) res.json({
-      status: false,
-      message: 'No se recibió la nueva clave'
-    });
 
     const decodedToken = jwt.verify(resetToken, process.env.SECRETKEY);
     const user = await User.findOne({ where: { id: decodedToken.id } });
