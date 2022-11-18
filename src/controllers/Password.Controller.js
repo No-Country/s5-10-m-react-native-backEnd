@@ -2,17 +2,15 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { encryptPw } = require('../helpers/bcrypt');
 const { transporter, mailOptions } = require('../helpers/nodemailer');
+const handleError = require('../helpers/handleError');
 
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ where: { email } });
 
-    if (!user) res.json({
-      status: false,
-      message: 'El usuario no se encuentra registrado'
-    })
-
+    if (!user) handleError(res, 404, "El usuario no se encuentra registrado")
+    
     const token = jwt.sign({
       id: user.id
     },
@@ -29,10 +27,7 @@ const forgotPassword = async (req, res) => {
       message: 'Se ha enviado un email a su correo electrónico'
     });
   } catch (error) {
-    res.status(500).json({
-      status: false,
-      message: 'Ha ocurrido un error por favor vuelva a intentarlo'
-    });
+    handleError(res, 500, "Ha ocurrido un error por favor vuelva a intentarlo");
   }
 };
 
@@ -44,10 +39,7 @@ const resetPassword = async (req, res) => {
     const decodedToken = jwt.verify(resetToken, process.env.SECRETKEY);
     const user = await User.findOne({ where: { id: decodedToken.id } });
 
-    if (!user) res.status(404).json({
-      status: false,
-      message: 'No se encontró el usuario, por favor intente nuevamente'
-    });
+    if (!user) handleError(res, 404, "No se encontró el usuario, por favor intente nuevamente")
 
     await User.update({
       password: encryptPw(password)
@@ -64,10 +56,7 @@ const resetPassword = async (req, res) => {
       message: 'Password actualizada'
     });
   } catch (error) {
-    res.status(500).json({
-      status: false,
-      message: 'Ha ocurrido un error por favor vuelva a intentarlo'
-    });
+    handleError(res, 500, "Ha ocurrido un error por favor vuelva a intentarlo");
   }
 };
 
