@@ -1,6 +1,7 @@
 const { encryptPw } = require('../helpers/bcrypt');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const handleError = require('../helpers/handleError');
 
 const register = async (req, res) => {
   try {
@@ -8,10 +9,7 @@ const register = async (req, res) => {
     const existUser = await User.findOne({ where: { email } });
 
     if (existUser) {
-      res.json({
-        status: 'failed',
-        message: 'La direccion de correo se encuentra asociada a una cuenta existente'
-      });
+     handleError( res , 400 , "El usuario no existe");
     } else {
       const user = new User({
         fullName,
@@ -28,10 +26,7 @@ const register = async (req, res) => {
       });
     }
   } catch (error) {
-    res.json({
-      status: false,
-      message: error.message
-    })
+    handleError( res , 500 , error.message);
   }
 };
 

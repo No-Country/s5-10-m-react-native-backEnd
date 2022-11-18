@@ -11,7 +11,7 @@ const validationMiddleware = (schema) => {
           
         //   if there is error return a error
   
-          return res.status(400).json({status: false, message: "datos inválidos", errors: errorsArray});
+          return handleError(res, 403, "Datos inválidos", errorsArray);
         }
         // if doesn't exist error, continue
         next()
