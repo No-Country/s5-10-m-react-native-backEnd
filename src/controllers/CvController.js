@@ -45,7 +45,6 @@ const createCV = async (req, res) => {
     // CREATE AND JOIN EDUCATIONS TO CV
 
     if(educations){
-        console.log('asasd')
         for (const education of educations) {
             await Education.create({
                 title: education.title,
