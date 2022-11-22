@@ -9,7 +9,7 @@ const Curriculum = sequelize.define('curriculum', {
       allowNull: false,
       unique: true
     },
-    name: {
+    fullName: {
         type: DataTypes.STRING,
         allowNull: false
     },

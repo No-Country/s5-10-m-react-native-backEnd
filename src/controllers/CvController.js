@@ -30,7 +30,7 @@ const createCV = async (req, res) => {
     }
 
     const curriculumCreated = await Curriculum.create({
-        name: fullName,
+        fullName,
         rol,
         phone,
         email,
@@ -44,36 +44,43 @@ const createCV = async (req, res) => {
 
     // CREATE AND JOIN EDUCATIONS TO CV
 
-    for (const education of educations) {
-        await Education.create({
-            title: education.title,
-            school: education.school,
-            description: education.description,
-            startYear: education.startYear,
-            endYear: education.endYear,
-            cvId: curriculumCreated.id
-        })
+    if(educations){
+        console.log('asasd')
+        for (const education of educations) {
+            await Education.create({
+                title: education.title,
+                school: education.school,
+                description: education.description,
+                startYear: education.startYear,
+                endYear: education.endYear,
+                cvId: curriculumCreated.id
+            })
+        }
     }
 
       // CREATE AND JOIN SKILLS TO CV
 
-      for (const skill of skills) {
-        await Skill.create({
-            name: skill.name,
-            cvId: curriculumCreated.id
-        })
-    }
+     if (skills) {
+        for (const skill of skills) {
+            await Skill.create({
+                name: skill.name,
+                cvId: curriculumCreated.id
+            })
+        }
+     }
 
     // CREATE AND JOIN EXPERIENCES TO CV
 
-    for (const experience of experiences) {
-        await Experience.create({
-            title: experience.title,
-            description: experience.description,
-            startYear: experience.startYear,
-            endYear: experience.endYear,
-            cvId: curriculumCreated.id
-        })
+    if (experiences) {
+        for (const experience of experiences) {
+            await Experience.create({
+                title: experience.title,
+                description: experience.description,
+                startYear: experience.startYear,
+                endYear: experience.endYear,
+                cvId: curriculumCreated.id
+            })
+        }
     }
 
 
