@@ -77,16 +77,7 @@ const createCV = async (req, res) => {
     }
 
 
-   const findAll = await Curriculum.findAll({where:curriculumCreated.id ,
-    include: [
-        {model: User, as: 'user'},
-        {model: Experience, as: 'experiences'},
-        {model: Skill, as: 'skills'},
-        {model: Education, as: 'educations'}
-    ]});
-
-
-    res.json(findAll);
+    res.status(200).json({status: true, message: "CV creado satisfactoriamente!"});
    } catch (error) {
     handleError(res, 500, error.message)
    }
