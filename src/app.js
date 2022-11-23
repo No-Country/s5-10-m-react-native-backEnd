@@ -7,6 +7,7 @@ const app = express();
 // import routes
 const registerRoute = require('./routes/Register');
 const passwordRoute = require('./routes/Password');
+const cvRoute = require('./routes/Cv');
 
 // settings
 app.set('PORT', process.env.PORT || 4000);
@@ -21,6 +22,7 @@ app.use(cors());
 // routes
 app.use('/api', registerRoute);
 app.use('/api', passwordRoute);
+app.use('/api', cvRoute);
 
 
 // export app
