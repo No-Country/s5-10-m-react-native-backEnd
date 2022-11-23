@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const validationMiddleware = require('../middlewares/validationMiddleware');
 const createCVValidation = require('../helpers/schemasValidation/createCVValidation');
-const {createCV} = require('../controllers/CvController');
+const {createCV} = require('../controllers/Cv.Controller');
 const router = Router();
 
 
