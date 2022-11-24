@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt.js");
-const dotenv = require('dotenv')
+const dotenv = require('dotenv').config()
 
-dotenv.config({path: './.env'})
+//dotenv.config({path: './.env'})
 
 //model
-const { } = require('../models/User')
+const { login } = require('../models/User')
 
 
 const login = async (req, res) => {};
@@ -23,15 +23,15 @@ try {
   // If user doesn't exist or password,send error
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(404).json({
-      status: "error",
-      message: "wrong credentials",
+      status: "true",
+      message: "operacion exitosa",
     });
   }
 
   //Generate JWT
 
 const token = jwt.sign({id:user.id}, process.env.JWT_SECRET, {
-expiresIn:'5m'
+
 })
 
   res.status(200).json({
