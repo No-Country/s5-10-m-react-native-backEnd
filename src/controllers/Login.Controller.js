@@ -5,26 +5,25 @@ const handleError = require('../helpers/handleError');
 
 const register = async (req, res) => {
   try {
-    const { fullName, email, password } = req.body;
+    const {email, password } = req.body;
     const existUser = await User.findOne({ where: { email } });
 
-    if (existUser) {
-     handleError( res , 400 , "El usuario no existe");
-    } else {
-      const user = new User({
-        fullName,
-        email,
-        password: await encryptPw(password)
-      });
-
-      await user.save();
-
-      res.json({
-        status: true,
-        message: 'Usuario creado',
-        token: jwt.sign(email, process.env.SECRETKEY)
-      });
+    if (!existUser) {
+     return handleError( res , 400 , "Los datos no coinciden");
     }
+
+    const comparePassword = await comparePw(password, existUser.password);
+
+    if(!comparePassword) {
+       return handleError( res , 400 , "Los datos no coinciden");
+    }
+
+
+    res.json({
+        status: true,
+        message: 'Inicio de Sesión exitoso!',
+        token: jwt.sign(email, process.env.SECRETKEY)
+    });
   } catch (error) {
     handleError( res , 500 , error.message);
   }
