@@ -7,6 +7,6 @@ const validationMiddleware = require('../middlewares/validationMiddleware');
 
 
 router.post('/create/skill', validationMiddleware(validationCreateSkill), createSkill);
-router.put('/edit/skill/:skillId', validationMiddleware(validationCreateSkill), editSkill);
+router.put('/edit/skill/:skillId', validationMiddleware(validationEditSkill), editSkill);
 
 module.exports = router;
