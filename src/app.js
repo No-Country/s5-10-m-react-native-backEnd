@@ -8,7 +8,6 @@ const app = express();
 const registerRoute = require('./routes/Register');
 const passwordRoute = require('./routes/Password');
 const cvRoute = require('./routes/Cv');
-const loginRoute = require('./routes/Login');
 const skillRoute = require('./routes/Skill');
 
 // settings
@@ -25,7 +24,6 @@ app.use(cors());
 app.use('/api', registerRoute);
 app.use('/api', passwordRoute);
 app.use('/api', cvRoute);
-app.use('/api', loginRoute);
 app.use('/api', skillRoute);
 
 
