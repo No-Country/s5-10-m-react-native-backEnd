@@ -14,5 +14,33 @@ const createSkill = async (req, res) => {
     }
 }
 
+const editSkill = async (req, res) => {
+    try {
+        const {skillId} = req.params;
+
+        const {name} = req.body; 
+
+        const skillFound = await Skill.findByPk(skillId);
+
+        if(!skillFound){
+            return handleError(res, 500, "Habilidad no encontrada");
+        }
+
+        const skillEdited = await Skill.update(
+            {
+                name
+            }, {
+                where: {
+                    id: skillFound.id
+                }
+        })
+
+        res.status(200).json({status: true, message: "Habilidad editada", skill: skillEdited});
+
+    } catch (error) {
+        handleError(res, 500, error.message);
+    }
+}
+
 
 module.exports  = {createSkill}
