@@ -8,6 +8,7 @@ const app = express();
 const registerRoute = require('./routes/Register');
 const passwordRoute = require('./routes/Password');
 const cvRoute = require('./routes/Cv');
+const skillRoute = require('./routes/Skill');
 
 // settings
 app.set('PORT', process.env.PORT || 4000);
@@ -23,6 +24,7 @@ app.use(cors());
 app.use('/api', registerRoute);
 app.use('/api', passwordRoute);
 app.use('/api', cvRoute);
+app.use('/api', skillRoute);
 
 
 // export app
