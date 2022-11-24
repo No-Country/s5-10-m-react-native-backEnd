@@ -26,16 +26,16 @@ const editSkill = async (req, res) => {
             return handleError(res, 500, "Habilidad no encontrada");
         }
 
-        const skillEdited = await Skill.update(
+        await Skill.update(
             {
                 name
             }, {
                 where: {
                     id: skillFound.id
-                }
+                },
         })
 
-        res.status(200).json({status: true, message: "Habilidad editada", skill: skillEdited});
+        res.status(200).json({status: true, message: "Habilidad editada"});
 
     } catch (error) {
         handleError(res, 500, error.message);
@@ -43,4 +43,4 @@ const editSkill = async (req, res) => {
 }
 
 
-module.exports  = {createSkill}
+module.exports  = {createSkill,editSkill}
