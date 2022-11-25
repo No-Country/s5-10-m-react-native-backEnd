@@ -14,7 +14,7 @@ const mailOptions = (email, token) => {
     to: email,
     cc: process.env.NODEMAILER_USER,
     subject: '[myCv] Reinicio de contraseña',
-    html: `<h3>Por favor, actualice su contraseña siguiendo con el siguiente token de seguridad:<br> <strong>${token}</strong></h3><strong><i>myCv</i></strong>`
+    html: `<h3>Por favor, actualice su contraseña introduciendo el siguiente token:<br> <strong>${token}</strong></h3><strong><i>myCv</i></strong>`
   }
 };
 
