@@ -6,7 +6,6 @@ const { transporter, mailOptions } = require('../helpers/nodemailer');
 const handleError = require('../helpers/handleError');
 
 const forgotPassword = async (req, res) => {
-  console.log('forgotPassword')
   try {
     const { email } = req.body;
     const user = await User.findOne({ where: { email } });
