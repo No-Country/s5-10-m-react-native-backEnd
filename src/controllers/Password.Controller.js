@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { encryptPw } = require('../helpers/bcrypt');
+const {nanoid} = require('nanoid');
 const { transporter, mailOptions } = require('../helpers/nodemailer');
 const handleError = require('../helpers/handleError');
 
@@ -11,16 +12,17 @@ const forgotPassword = async (req, res) => {
 
     if (!user) handleError(res, 404, "El usuario no se encuentra registrado")
     
-    const token = jwt.sign({
-      id: user.id
-    },
-      process.env.SECRETKEY,
-      { expiresIn: '30m' }
-    );
+    const token = nanoid(6);
+    
+    await User.update({
+      resetToken: token
+    }, {
+      where: {
+        email
+      }
+    });
 
-    const resetLink = `${process.env.FRONT_URI}/password/${token}`
-
-    transporter.sendMail(mailOptions(email, resetLink));
+    transporter.sendMail(mailOptions(email, token));
 
     res.status(200).json({
       status: true,
@@ -31,15 +33,34 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+const confirmToken = async (req, res) => {
+  try {
+    const { resetToken } = req.body;
+    const user = await User.findOne({ where: { resetToken } });
+    if (user) res.status(200).json({
+      status: true,
+      token: user.resetToken
+    })
+  } catch (error) {
+    handleError(res, 401, "Token invalido");
+  }
+};
+
 const resetPassword = async (req, res) => {
   try {
-    const { resetToken } = req.params;
-    const { password } = req.body;
+    const { password, resetToken } = req.body;
 
-    const decodedToken = jwt.verify(resetToken, process.env.SECRETKEY);
-    const user = await User.findOne({ where: { id: decodedToken.id } });
+    const user = await User.findOne({ where: { resetToken } });
 
     if (!user) handleError(res, 404, "No se encontró el usuario, por favor intente nuevamente")
+
+    await User.update({
+      resetToken: null
+    }, {
+      where: {
+        id: user.id
+      }
+    });
 
     await User.update({
       password: encryptPw(password)
@@ -62,5 +83,6 @@ const resetPassword = async (req, res) => {
 
 module.exports = {
   forgotPassword,
+  confirmToken,
   resetPassword,
 }

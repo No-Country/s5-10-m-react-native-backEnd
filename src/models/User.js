@@ -20,6 +20,11 @@ const User = sequelize.define('user', {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    resetToken: {
+      type: DataTypes.STRING(6),
+      allowNull: true,
+      defaultValue: null
     }
   }, {
     timestamps: true

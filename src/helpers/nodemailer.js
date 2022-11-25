@@ -8,13 +8,13 @@ const transporter = createTransport({
   }
 });
 
-const mailOptions = (email, confirmationLink) => {
+const mailOptions = (email, token) => {
   return {
     from: 'myCv App',
     to: email,
     cc: process.env.NODEMAILER_USER,
     subject: '[myCv] Reinicio de contraseña',
-    html: `<h3>Por favor, actualice su contraseña siguiendo el siguiente enlace <a href="${confirmationLink}">Actualizar contraseña</a></h3><strong><i>myCv</i></strong>`
+    html: `<h3>Por favor, actualice su contraseña introduciendo el siguiente token:<br> <strong>${token}</strong></h3><strong><i>myCv</i></strong>`
   }
 };
 
