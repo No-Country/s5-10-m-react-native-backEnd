@@ -9,7 +9,7 @@ const resetPasswordValidation = checkSchema({
     errorMessage: 'Contraseña inválida'
   },
   resetToken: {
-    in: ["params"],
+    in: ["body"],
     exists: {options: {checkFalsy: true} },
     bail: true,
     isString: true,
