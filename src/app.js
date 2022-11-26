@@ -9,6 +9,7 @@ const registerRoute = require('./routes/Register');
 const passwordRoute = require('./routes/Password');
 const cvRoute = require('./routes/Cv');
 const skillRoute = require('./routes/Skill');
+const Login = require('./routes/Login');
 
 // settings
 app.set('PORT', process.env.PORT || 4000);
@@ -25,6 +26,7 @@ app.use('/api', registerRoute);
 app.use('/api', passwordRoute);
 app.use('/api', cvRoute);
 app.use('/api', skillRoute);
+app.use('/api', Login);
 
 
 // export app
