@@ -9,6 +9,6 @@ const router = Router();
 
 router.post('/user/:userId/create/cv', validationMiddleware(createCVValidation), createCV);
 router.get('/user/:userId/get/cv', validationMiddleware(getCVValidation), getCV);
-router.delete('/user/:userId/delete/cv', validationMiddleware(deleteCVValidation), deleteCV);
+router.delete('/user/:userId/delete/:cvId', validationMiddleware(deleteCVValidation), deleteCV);
 
 module.exports = router;
