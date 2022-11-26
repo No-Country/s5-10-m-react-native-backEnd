@@ -90,18 +90,14 @@ const createCV = async (req, res) => {
 
 }
 
-const getCv = async (req, res) => {
+const getCV = async (req, res) => {
 	try {
-		const { userId } = req.body;
+		const { userId } = req.params;
 
-		const curriculumFound = await Curriculum.findOne({
-			where: {
-				userId
-			}
-		});
+		const curriculumFound = await Curriculum.findAll({ where: { userId } });
 
-		if (!curriculumFound) {
-			return handleError(res, 400, "Curriculum no encontrado");
+		if (!curriculumFound || curriculumFound.length === 0) {
+			return handleError(res, 400, "CV no encontrado");
 		}
 
 		res.status(200).json({ status: true, message: curriculumFound });
@@ -111,7 +107,31 @@ const getCv = async (req, res) => {
 	}
 }
 
+const deleteCV = async (req, res) => {
+	try {
+		const { userId } = req.params;
+		const { cvId } = req.body;
+
+		const curriculumFound = await Curriculum.findOne({ where: { userId, id: cvId } })
+
+		if (!curriculumFound) {
+			return handleError(res, 400, "CV no encontrado");
+		}
+		if (curriculumFound.id !== Number(cvId)) {
+			return handleError(res, 403, "El CV que intentas eliminar no pertenece al usuario");
+		}
+
+		await Curriculum.destroy({ where: { userId, id: cvId } });
+
+		res.status(200).json({ status: true, message: 'CV eliminado' });
+
+	} catch (error) {
+		handleError(res, 500, error.message)
+	}
+}
+
 module.exports = {
 	createCV,
-	getCv
+	getCV,
+	deleteCV
 };
