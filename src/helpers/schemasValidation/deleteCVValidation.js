@@ -9,7 +9,7 @@ const validationDeleteCv = checkSchema({
     errorMessage: 'Id usuario inválido'
   },
   cvId: {
-    in: ["body"],
+    in: ["params"],
     exists: { options: { checkFalsy: true } },
     bail: true,
     isString: true,
