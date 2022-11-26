@@ -100,7 +100,7 @@ const getCV = async (req, res) => {
 			return handleError(res, 400, "CV no encontrado");
 		}
 
-		res.status(200).json({ status: true, message: curriculumFound });
+		res.status(200).json({ status: true, data: curriculumFound });
 
 	} catch (error) {
 		handleError(res, 500, error.message)
@@ -109,8 +109,7 @@ const getCV = async (req, res) => {
 
 const deleteCV = async (req, res) => {
 	try {
-		const { userId } = req.params;
-		const { cvId } = req.body;
+		const { userId, cvId } = req.params;
 
 		const curriculumFound = await Curriculum.findOne({ where: { userId, id: cvId } })
 
