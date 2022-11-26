@@ -3,7 +3,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const handleError = require('../helpers/handleError');
 
-const register = async (req, res) => {
+const login = async (req, res) => {
   try {
     const {email, password } = req.body;
     const existUser = await User.findOne({ where: { email } });
@@ -29,4 +29,4 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = register;
+module.exports = login;
