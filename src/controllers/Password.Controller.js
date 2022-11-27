@@ -10,7 +10,7 @@ const forgotPassword = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ where: { email } });
 
-    if (!user) handleError(res, 404, "El usuario no se encuentra registrado")
+    if (!user) return handleError(res, 404, "El usuario no se encuentra registrado")
     
     const token = nanoid(6);
     
@@ -42,7 +42,7 @@ const confirmToken = async (req, res) => {
       token: user.resetToken
     })
 
-    handleError(res, 401, "Token inválido");
+    return handleError(res, 401, "Token inválido");
   } catch (error) {
     handleError(res, 401, "Token invalido");
   }
@@ -54,7 +54,7 @@ const resetPassword = async (req, res) => {
 
     const user = await User.findOne({ where: { resetToken } });
 
-    if (!user) handleError(res, 404, "No se encontró el usuario, por favor intente nuevamente")
+    if (!user) return handleError(res, 404, "No se encontró el usuario, por favor intente nuevamente")
 
     await User.update({
       resetToken: null
