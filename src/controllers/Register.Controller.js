@@ -9,7 +9,7 @@ const register = async (req, res) => {
     const existUser = await User.findOne({ where: { email } });
 
     if (existUser) {
-     handleError( res , 400 , "El usuario no existe");
+     handleError( res , 400 , "El usuario ya existe");
     } else {
       const user = new User({
         fullName,
