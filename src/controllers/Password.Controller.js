@@ -41,6 +41,8 @@ const confirmToken = async (req, res) => {
       status: true,
       token: user.resetToken
     })
+
+    handleError(res, 401, "Token inválido");
   } catch (error) {
     handleError(res, 401, "Token invalido");
   }
