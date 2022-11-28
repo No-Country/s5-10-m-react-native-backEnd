@@ -9,7 +9,7 @@ const app = express();
 // import routes
 const registerRoute = require('./routes/Register');
 const passwordRoute = require('./routes/Password');
-const cvRoute = require('./routes/Cv');
+const cvRoute = require('./routes/cv');
 const skillRoute = require('./routes/Skill');
 const Login = require('./routes/Login');
 const Role = require('./routes/Role');
