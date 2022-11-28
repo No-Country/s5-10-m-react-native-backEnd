@@ -7,12 +7,6 @@ const createCVValidation = checkSchema({
         isString: true,
         errorMessage: 'Nombre inválido'
     },
-    rol: {
-        exists: { options: { checkFalsy: true } },
-        bail: true,
-        isString: true,
-        errorMessage: 'Rol inválido'
-    },
     phone: {
         exists: { options: { checkFalsy: true } },
         bail: true,
@@ -49,7 +43,7 @@ const createCVValidation = checkSchema({
             }
 
             for (const experience of value) {
-                if(!experience.title || !experience.description || !experience.startYear || !experience.endYear) {
+                if(!experience.name || !experience.role || !experience.description || !experience.startYear || !experience.endYear) {
                     return false
                 }
             }
@@ -108,7 +102,41 @@ const createCVValidation = checkSchema({
     },
     
     errorMessage: "Educación inválida"
-  }
+  },
+  role:{
+        exists: { options: { checkFalsy: true } },
+        bail: true,
+        isString: true,
+        errorMessage: 'Rol inválido'
+    },
+  languages: {
+    custom: {
+        options: (value, {req, location, path}) => {
+            if(!value){
+                return true
+            }
+
+            if(!Array.isArray(value) || value.length < 0){
+                return false;
+            }
+
+            for (const language of value) {
+                if(!language.language) {
+                    return false
+                }
+                if(language.skill !== "basico" && language.skill !== "intermedio" && language.skill !== "avanzado"){
+                    return false
+                }
+            }
+
+            return true
+            
+        }
+    },
+    
+    errorMessage: "Lenguaje inválido"
+  },
+  
 });
 
 module.exports = createCVValidation

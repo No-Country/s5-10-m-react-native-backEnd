@@ -24,7 +24,7 @@ const createCV = async (req, res) => {
 			experiences,
 			skills,
 			educations,
-			roles,
+			role,
 			languages
 		} = req.body;
 
@@ -66,11 +66,8 @@ const createCV = async (req, res) => {
 		if (skills) {
 			for (const skill of skills) {
 				const skillFound = await Skill.findOne({where: {name: skill.name}});
-				if(!skillFound){
-					await Skill.create({
-						name: skill.name,
-						cvId: curriculumCreated.id
-					})
+				if(skillFound){
+					await curriculumCreated.addSkill(skillFound);
 				} else {
 					await OtherSkill.create({
 						name: skill.name,
@@ -81,21 +78,16 @@ const createCV = async (req, res) => {
 		}
 
 		// CREATE AND JOIN ROLE TO CV
-		if (roles) {
-			for (const role of roles) {
-				const roleFound = await Role.findOne({where: {name: role.name}});
-				if(!roleFound){
-					await Role.create({
-						name: role.name,
-						cvId: curriculumCreated.id
-					})
+		if (role) {
+				const roleFound = await Role.findOne({where: {name: role}});
+				if(roleFound){
+					await curriculumCreated.addRole(roleFound);
 				} else {
 					await OtherRole.create({
-						name: role.name,
+						name: role,
 						cvId: curriculumCreated.id
 					})
 				}
-			}
 		}
 
 		// CREATE AND JOIN EXPERIENCES TO CV
@@ -125,8 +117,21 @@ const createCV = async (req, res) => {
 			}
 		}
 
+		const cv = await Curriculum.findByPk(curriculumCreated.id, {
+			include: [
+				"languages",
+				"projects",
+				"otherRoles",
+				"roles",
+				"otherSkills",
+				"skills",
+				"educations",
+				"experiences"
+			]
+		});
 
-		res.status(200).json({ status: true, message: "CV creado satisfactoriamente!" });
+
+		res.status(200).json({ status: true, message: "CV creado satisfactoriamente!", cv });
 	} catch (error) {
 		handleError(res, 500, error.message)
 	}
