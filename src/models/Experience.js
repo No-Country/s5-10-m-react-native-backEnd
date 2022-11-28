@@ -9,8 +9,12 @@ const Experience = sequelize.define('experience', {
       allowNull: false,
       unique: true
     },
-    title: {
+    name: {
         type: DataTypes.STRING,
+        allowNull: false
+    },
+    role: {
+      type: DataTypes.STRING,
         allowNull: false
     },
     description: {
