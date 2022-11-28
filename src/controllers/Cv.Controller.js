@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Education = require('../models/Education');
 const Experience = require('../models/Experience');
+const Language = require('../models/Language');
 const Skill = require('../models/Skill');
 const Role = require('../models/Role');
 const OtherSkill = require('../models/OtherSkill');
@@ -23,7 +24,8 @@ const createCV = async (req, res) => {
 			experiences,
 			skills,
 			educations,
-			roles
+			roles,
+			languages
 		} = req.body;
 
 		const userFound = await User.findByPk(userId);
@@ -106,6 +108,18 @@ const createCV = async (req, res) => {
 					description: experience.description,
 					startYear: experience.startYear,
 					endYear: experience.endYear,
+					cvId: curriculumCreated.id
+				})
+			}
+		}
+
+		// CREATE AND JOIN Language TO CV
+
+		if (languages) {
+			for (const language of languages) {
+				await Language.create({
+					language: language.language,
+					skill: language.skill,
 					cvId: curriculumCreated.id
 				})
 			}
