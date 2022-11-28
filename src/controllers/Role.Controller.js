@@ -14,6 +14,34 @@ const createRole = async (req, res) => {
     }
 }
 
+const editRole = async (req, res) => {
+    try {
+        const {roleId} = req.params;
+
+        const {name} = req.body; 
+
+        const roleFound = await Role.findByPk(roleId);
+
+        if(!roleFound){
+            return handleError(res, 500, "Rol no encontrado");
+        }
+
+        await Role.update(
+            {
+                name
+            }, {
+                where: {
+                    id: roleFound.id
+                },
+        })
+
+        res.status(200).json({status: true, message: "Habilidad editada"});
+
+    } catch (error) {
+        handleError(res, 500, error.message);
+    }
+}
 
 
-module.exports  = {createRole}
+
+module.exports  = {createRole, editRole}
