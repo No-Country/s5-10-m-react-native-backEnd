@@ -7,6 +7,7 @@ const Skill = require('./Skill.js');
 const Role = require('./Role.js');
 const OtherSkill = require('./OtherSkill');
 const OtherRole = require('./OtherRole');
+const Language = require('./Language');
 
 // relation
 
@@ -50,3 +51,8 @@ OtherRole.belongsTo(Curriculum, {through: "cvId"});
 Curriculum.hasMany(Project, {as: "projects", foreignKey: "cvId"});
 
 Project.belongsTo(Curriculum, {as: "cv"});
+
+// cv to language
+Curriculum.hasMany(Language, {as: "languages", foreignKey: "cvId"});
+
+Language.belongsTo(Curriculum, {as: "cv"});
