@@ -2,6 +2,9 @@ const User = require('../models/User');
 const Education = require('../models/Education');
 const Experience = require('../models/Experience');
 const Skill = require('../models/Skill');
+const Role = require('../models/Role');
+const OtherSkill = require('../models/OtherSkill');
+const OtherRole = require('../models/OtherRole');
 const Curriculum = require('../models/Curriculum');
 const handleError = require('../helpers/handleError');
 
@@ -10,7 +13,6 @@ const createCV = async (req, res) => {
 		const { userId } = req.params;
 		const {
 			fullName,
-			rol,
 			phone,
 			email,
 			portfolio,
@@ -20,7 +22,8 @@ const createCV = async (req, res) => {
 			aboutMe,
 			experiences,
 			skills,
-			educations
+			educations,
+			roles
 		} = req.body;
 
 		const userFound = await User.findByPk(userId);
@@ -31,7 +34,6 @@ const createCV = async (req, res) => {
 
 		const curriculumCreated = await Curriculum.create({
 			fullName,
-			rol,
 			phone,
 			email,
 			portfolio,
@@ -61,10 +63,36 @@ const createCV = async (req, res) => {
 
 		if (skills) {
 			for (const skill of skills) {
-				await Skill.create({
-					name: skill.name,
-					cvId: curriculumCreated.id
-				})
+				const skillFound = await Skill.findOne({where: {name: skill.name}});
+				if(!skillFound){
+					await Skill.create({
+						name: skill.name,
+						cvId: curriculumCreated.id
+					})
+				} else {
+					await OtherSkill.create({
+						name: skill.name,
+						cvId: curriculumCreated.id
+					})
+				}
+			}
+		}
+
+		// CREATE AND JOIN ROLE TO CV
+		if (roles) {
+			for (const role of roles) {
+				const roleFound = await Role.findOne({where: {name: role.name}});
+				if(!roleFound){
+					await Role.create({
+						name: role.name,
+						cvId: curriculumCreated.id
+					})
+				} else {
+					await OtherRole.create({
+						name: role.name,
+						cvId: curriculumCreated.id
+					})
+				}
 			}
 		}
 
@@ -73,7 +101,8 @@ const createCV = async (req, res) => {
 		if (experiences) {
 			for (const experience of experiences) {
 				await Experience.create({
-					title: experience.title,
+					name: experience.name,
+					role: experience.role,
 					description: experience.description,
 					startYear: experience.startYear,
 					endYear: experience.endYear,
