@@ -13,10 +13,6 @@ const Curriculum = sequelize.define('curriculum', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    rol: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     phone: {
         type: DataTypes.STRING,
         allowNull: false
