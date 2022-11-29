@@ -299,7 +299,7 @@ const editCv = async (req, res) => {
 			}
 		}
 
-		// update educations of table experience related with cv
+		// update skills of table experience related with cv
 
 		if (skills) {
 			for (const skill of skills) {
@@ -329,6 +329,36 @@ const editCv = async (req, res) => {
 
 			}
 		}
+
+		// update role of table experience related with cv
+
+		if (role) {
+				const roleFound = await Role.findOne({ where: { id: role.id, name: role.nameToEdit } });
+				if (roleFound) {
+					await Role.update({
+						name: role.nameForEdit
+					},{
+						where: {
+							id: role.id, 
+							name: role.nameToEdit
+						}
+					})
+				} else {
+					const otherRoleFound = await OtherRole.findOne({ where: { id: role.id, name: role.nameToEdit } });
+					if(otherRoleFound){
+						await OtherSkill.update({
+							name: role.nameForEdit
+						},{
+							where: {
+								id: role.id, 
+								name: role.nameToEdit
+							}
+						})
+					}
+				}
+		}
+
+		
 
 		res.status(200).json({status: true, message: "CV editado correctamente"});
 	
