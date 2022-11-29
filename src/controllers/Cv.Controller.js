@@ -228,14 +228,18 @@ const editCv = async (req, res) => {
 		} = req.body;
 	
 		const {userId, cvId} = req.params;
+
+		// check if the user want to edit a cv that it's yours
 	
 		const cvFound = await Curriculum.findOne({where: {id: cvId, userId}});
 	
 		if(!cvFound){
 			return handleError(res, 400, "Id de cv o usuario inválido");
 		}
+
+		// update simple data of table cv
 	
-		const a = await Curriculum.update({
+		await Curriculum.update({
 			fullName,
 			phone,
 			email,
@@ -249,10 +253,25 @@ const editCv = async (req, res) => {
 				id: cvId
 			}
 		});
+
+		// update experiences of table experience related with cv
+
+		if (experiences) {
+			for (const experience of experiences) {
+				await Experience.update({
+					name: experience.name,
+					role: experience.role,
+					description: experience.description,
+					startYear: experience.startYear,
+					endYear: experience.endYear
+				}, {
+					where: {id: experience.id, cvId}
+				})			
+			}
+		}
+
+		res.json();
 	
-	const cv = await Curriculum.findByPk(cvId);
-	
-		res.json(cv)
 	} catch (error) {
 		handleError(res, 500, error.message);
 	}
