@@ -209,8 +209,58 @@ const deleteCV = async (req, res) => {
 	}
 }
 
+const editCv = async (req, res) => {
+	try {
+		const {
+			fullName,
+			phone,
+			email,
+			portfolio,
+			linkedin,
+			github,
+			address,
+			aboutMe,
+			experiences,
+			skills,
+			educations,
+			role,
+			languages
+		} = req.body;
+	
+		const {userId, cvId} = req.params;
+	
+		const cvFound = await Curriculum.findOne({where: {id: cvId, userId}});
+	
+		if(!cvFound){
+			return handleError(res, 400, "Id de cv o usuario inválido");
+		}
+	
+		const a = await Curriculum.update({
+			fullName,
+			phone,
+			email,
+			portfolio,
+			linkedin,
+			github,
+			address,
+			aboutMe
+		}, {
+			where: {
+				id: cvId
+			}
+		});
+	
+	const cv = await Curriculum.findByPk(cvId);
+	
+		res.json(cv)
+	} catch (error) {
+		handleError(res, 500, error.message);
+	}
+}
+
 module.exports = {
 	createCV,
 	getCV,
-	deleteCV
+	deleteCV,
+	editCv
 };
