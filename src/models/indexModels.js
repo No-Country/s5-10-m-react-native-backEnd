@@ -27,9 +27,9 @@ Curriculum.hasMany(Education, {as: 'educations', foreignKey: "cvId"});
 Education.belongsTo(Curriculum, {as: "cv"});
 
 // cv to skill
-Curriculum.belongsToMany(Skill, {through: "cv_skill"});
+Curriculum.belongsToMany(Skill, {through: "cvId"});
 
-Skill.belongsToMany(Curriculum, {through: "cv_skill"});
+Skill.belongsTo(Curriculum, {as: "cv"});
 
 // cv to otherSkill
 Curriculum.hasMany(OtherSkill, {as:'otherSkills',foreignKey: "cvId"});
