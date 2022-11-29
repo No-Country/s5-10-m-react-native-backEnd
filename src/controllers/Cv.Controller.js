@@ -299,7 +299,38 @@ const editCv = async (req, res) => {
 			}
 		}
 
-		res.json();
+		// update educations of table experience related with cv
+
+		if (skills) {
+			for (const skill of skills) {
+				const skillFound = await Skill.findOne({ where: { id: skill.id, name: skill.nameToEdit } });
+				if (skillFound) {
+					await Skill.update({
+						name: skill.nameForEdit
+					},{
+						where: {
+							id: skill.id, 
+							name: skill.nameToEdit
+						}
+					})
+				} else {
+					const otherSkillFound = await OtherSkill.findOne({ where: { id: skill.id, name: skill.nameToEdit } });
+					if(otherSkillFound){
+						await OtherSkill.update({
+							name: skill.nameForEdit
+						},{
+							where: {
+								id: skill.id, 
+								name: skill.nameToEdit
+							}
+						})
+					}
+				}
+
+			}
+		}
+
+		res.status(200).json({status: true, message: "CV editado correctamente"});
 	
 	} catch (error) {
 		handleError(res, 500, error.message);
