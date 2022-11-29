@@ -65,8 +65,8 @@ const createCV = async (req, res) => {
 
 		if (skills) {
 			for (const skill of skills) {
-				const skillFound = await Skill.findOne({where: {name: skill.name}});
-				if(skillFound){
+				const skillFound = await Skill.findOne({ where: { name: skill.name } });
+				if (skillFound) {
 					await curriculumCreated.addSkill(skillFound);
 				} else {
 					await OtherSkill.create({
@@ -79,15 +79,15 @@ const createCV = async (req, res) => {
 
 		// CREATE AND JOIN ROLE TO CV
 		if (role) {
-				const roleFound = await Role.findOne({where: {name: role}});
-				if(roleFound){
-					await curriculumCreated.addRole(roleFound);
-				} else {
-					await OtherRole.create({
-						name: role,
-						cvId: curriculumCreated.id
-					})
-				}
+			const roleFound = await Role.findOne({ where: { name: role } });
+			if (roleFound) {
+				await curriculumCreated.addRole(roleFound);
+			} else {
+				await OtherRole.create({
+					name: role,
+					cvId: curriculumCreated.id
+				})
+			}
 		}
 
 		// CREATE AND JOIN EXPERIENCES TO CV
@@ -141,15 +141,47 @@ const createCV = async (req, res) => {
 const getCV = async (req, res) => {
 	try {
 		const { userId } = req.params;
-
-		const curriculumFound = await Curriculum.findAll({ where: { userId } });
+		const curriculumFound = await Curriculum.findAll({
+			where: { userId },
+			include: [
+				"languages",
+				"projects",
+				"otherRoles",
+				"roles",
+				"otherSkills",
+				"skills",
+				"educations",
+				"experiences"
+			]
+		});
 
 		if (!curriculumFound || curriculumFound.length === 0) {
 			return handleError(res, 400, "CV no encontrado");
 		}
 
-		res.status(200).json({ status: true, data: curriculumFound });
+		const cv = [];
+		for (let i = 0; i < curriculumFound.length; i++) {
+			cv.push({
+				id: curriculumFound[i].id,
+				userId: curriculumFound[i].userId,
+				fullName: curriculumFound[i].fullName,
+				phone: curriculumFound[i].phone,
+				email: curriculumFound[i].email,
+				portfolio: curriculumFound[i].portfolio,
+				linkedin: curriculumFound[i].linkedin,
+				github: curriculumFound[i].github,
+				address: curriculumFound[i].address,
+				aboutMe: curriculumFound[i].aboutMe,
+				education: curriculumFound[i].educations,
+				experience: curriculumFound[i].experiences,
+				languages: curriculumFound[i].languages,
+				projects: curriculumFound[i].projects,
+				skill: [...curriculumFound[i].skills.map(i => i.name), ...curriculumFound[i].otherSkills.map(i => i.name)],
+				role: [...curriculumFound[i].roles.map(i => i.name), ...curriculumFound[i].otherRoles.map(i => i.name)]
+			});
+		}
 
+		return res.status(200).json({ status: true, data: cv });
 	} catch (error) {
 		handleError(res, 500, error.message)
 	}
