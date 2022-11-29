@@ -280,7 +280,22 @@ const editCv = async (req, res) => {
 				}, {
 					where: {id: language.id, cvId}
 				})
-				console.log(await Language.findOne({id: language.id, cvId}))
+			}
+		}
+
+		// update educations of table experience related with cv
+
+		if (educations) {
+			for (const education of educations) {
+				await Education.update({
+					title: education.title,
+					school: education.school,
+					description: education.description,
+					startYear: education.startYear,
+					endYear: education.endYear,
+				}, {
+					where: {id: education.id, cvId}
+				})
 			}
 		}
 
