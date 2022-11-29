@@ -209,8 +209,167 @@ const deleteCV = async (req, res) => {
 	}
 }
 
+const editCv = async (req, res) => {
+	try {
+		const {
+			fullName,
+			phone,
+			email,
+			portfolio,
+			linkedin,
+			github,
+			address,
+			aboutMe,
+			experiences,
+			skills,
+			educations,
+			role,
+			languages
+		} = req.body;
+	
+		const {userId, cvId} = req.params;
+
+		// check if the user want to edit a cv that it's yours
+	
+		const cvFound = await Curriculum.findOne({where: {id: cvId, userId}});
+	
+		if(!cvFound){
+			return handleError(res, 400, "Id de cv o usuario inválido");
+		}
+
+		// update simple data of table cv
+	
+		await Curriculum.update({
+			fullName,
+			phone,
+			email,
+			portfolio,
+			linkedin,
+			github,
+			address,
+			aboutMe
+		}, {
+			where: {
+				id: cvId
+			}
+		});
+
+		// update experiences of table experience related with cv
+
+		if (experiences) {
+			for (const experience of experiences) {
+				await Experience.update({
+					name: experience.name,
+					role: experience.role,
+					description: experience.description,
+					startYear: experience.startYear,
+					endYear: experience.endYear
+				}, {
+					where: {id: experience.id, cvId}
+				})			
+			}
+		}
+
+		// update languages of table experience related with cv
+
+		if (languages) {
+			for (const language of languages) {
+				await Language.update({
+					language: language.language,
+					skill: language.skill,
+				}, {
+					where: {id: language.id, cvId}
+				})
+			}
+		}
+
+		// update educations of table experience related with cv
+
+		if (educations) {
+			for (const education of educations) {
+				await Education.update({
+					title: education.title,
+					school: education.school,
+					description: education.description,
+					startYear: education.startYear,
+					endYear: education.endYear,
+				}, {
+					where: {id: education.id, cvId}
+				})
+			}
+		}
+
+		// update skills of table experience related with cv
+
+		if (skills) {
+			for (const skill of skills) {
+				const skillFound = await Skill.findOne({ where: { id: skill.id, name: skill.nameToEdit } });
+				if (skillFound) {
+					await Skill.update({
+						name: skill.nameForEdit
+					},{
+						where: {
+							id: skill.id, 
+							name: skill.nameToEdit
+						}
+					})
+				} else {
+					const otherSkillFound = await OtherSkill.findOne({ where: { id: skill.id, name: skill.nameToEdit } });
+					if(otherSkillFound){
+						await OtherSkill.update({
+							name: skill.nameForEdit
+						},{
+							where: {
+								id: skill.id, 
+								name: skill.nameToEdit
+							}
+						})
+					}
+				}
+
+			}
+		}
+
+		// update role of table experience related with cv
+
+		if (role) {
+				const roleFound = await Role.findOne({ where: { id: role.id, name: role.nameToEdit } });
+				if (roleFound) {
+					await Role.update({
+						name: role.nameForEdit
+					},{
+						where: {
+							id: role.id, 
+							name: role.nameToEdit
+						}
+					})
+				} else {
+					const otherRoleFound = await OtherRole.findOne({ where: { id: role.id, name: role.nameToEdit } });
+					if(otherRoleFound){
+						await OtherSkill.update({
+							name: role.nameForEdit
+						},{
+							where: {
+								id: role.id, 
+								name: role.nameToEdit
+							}
+						})
+					}
+				}
+		}
+
+		
+
+		res.status(200).json({status: true, message: "CV editado correctamente"});
+	
+	} catch (error) {
+		handleError(res, 500, error.message);
+	}
+}
+
 module.exports = {
 	createCV,
 	getCV,
-	deleteCV
+	deleteCV,
+	editCv
 };
