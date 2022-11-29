@@ -148,7 +148,37 @@ const getCV = async (req, res) => {
 			return handleError(res, 400, "CV no encontrado");
 		}
 
-		res.status(200).json({ status: true, data: curriculumFound });
+		const cv = [];
+
+		for (let i = 0; i < curriculumFound.length; i++) {
+			const { fullName, phone, email, portfolio, linkedin, github, address, aboutMe, id, userId } = curriculumFound[i];
+			const education = await Education.findAll({ where: { cvId: curriculumFound[i].id } });
+			const experience = await Experience.findAll({ where: { cvId: curriculumFound[i].id } });
+			const language = await Language.findAll({ where: { cvId: curriculumFound[i].id } });
+			const skill = await Skill.findAll({ where: { cvId: curriculumFound[i].id } });
+			const role = await Role.findAll({ where: { cvId: curriculumFound[i].id } });
+			const otherskill = await OtherSkill.findAll({ where: { cvId: curriculumFound[i].id } });
+			const otherrole = await OtherRole.findAll({ where: { cvId: curriculumFound[i].id } });
+			cv.push({
+				id,
+				userId,
+				fullName,
+				phone,
+				email,
+				portfolio,
+				linkedin,
+				github,
+				address, 
+				aboutMe,
+				education,
+				experience,
+				language,
+				skill: [...skill.map(i => i.name), ...otherskill.map(i => i.name)],
+				role: [...role.map(i => i.name), ...otherrole.map(i => i.name)]
+			});
+		}
+
+		res.status(200).json({ status: true, data: cv });
 
 	} catch (error) {
 		handleError(res, 500, error.message)
