@@ -270,6 +270,20 @@ const editCv = async (req, res) => {
 			}
 		}
 
+		// update languages of table experience related with cv
+
+		if (languages) {
+			for (const language of languages) {
+				await Language.update({
+					language: language.language,
+					skill: language.skill,
+				}, {
+					where: {id: language.id, cvId}
+				})
+				console.log(await Language.findOne({id: language.id, cvId}))
+			}
+		}
+
 		res.json();
 	
 	} catch (error) {
