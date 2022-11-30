@@ -8,6 +8,13 @@ const OtherSkill = require('../models/OtherSkill');
 const OtherRole = require('../models/OtherRole');
 const Curriculum = require('../models/Curriculum');
 const handleError = require('../helpers/handleError');
+const {
+	formatSkillsRoles,
+	formatLanguages,
+	formatProjects,
+	formatExperience,
+	formatEducation
+} = require('../helpers/formatCv');
 
 const createCV = async (req, res) => {
 	try {
@@ -172,12 +179,12 @@ const getCV = async (req, res) => {
 				github: curriculumFound[i].github,
 				address: curriculumFound[i].address,
 				aboutMe: curriculumFound[i].aboutMe,
-				education: curriculumFound[i].educations,
-				experience: curriculumFound[i].experiences,
-				languages: curriculumFound[i].languages,
-				projects: curriculumFound[i].projects,
-				skill: [...curriculumFound[i].skills.map(i => i.name), ...curriculumFound[i].otherSkills.map(i => i.name)],
-				role: [...curriculumFound[i].roles.map(i => i.name), ...curriculumFound[i].otherRoles.map(i => i.name)]
+				education: formatEducation(curriculumFound[i].educations),
+				experience: formatExperience(curriculumFound[i].experiences),
+				languages: formatLanguages(curriculumFound[i].languages),
+				projects: formatProjects(curriculumFound[i].projects),
+				skill: formatSkillsRoles(curriculumFound[i].skills, curriculumFound[i].otherSkills),
+				role: formatSkillsRoles(curriculumFound[i].roles, curriculumFound[i].otherRoles)
 			});
 		}
 
@@ -226,19 +233,19 @@ const editCv = async (req, res) => {
 			role,
 			languages
 		} = req.body;
-	
-		const {userId, cvId} = req.params;
+
+		const { userId, cvId } = req.params;
 
 		// check if the user want to edit a cv that it's yours
-	
-		const cvFound = await Curriculum.findOne({where: {id: cvId, userId}});
-	
-		if(!cvFound){
+
+		const cvFound = await Curriculum.findOne({ where: { id: cvId, userId } });
+
+		if (!cvFound) {
 			return handleError(res, 400, "Id de cv o usuario inválido");
 		}
 
 		// update simple data of table cv
-	
+
 		await Curriculum.update({
 			fullName,
 			phone,
@@ -265,8 +272,8 @@ const editCv = async (req, res) => {
 					startYear: experience.startYear,
 					endYear: experience.endYear
 				}, {
-					where: {id: experience.id, cvId}
-				})			
+					where: { id: experience.id, cvId }
+				})
 			}
 		}
 
@@ -278,7 +285,7 @@ const editCv = async (req, res) => {
 					language: language.language,
 					skill: language.skill,
 				}, {
-					where: {id: language.id, cvId}
+					where: { id: language.id, cvId }
 				})
 			}
 		}
@@ -294,7 +301,7 @@ const editCv = async (req, res) => {
 					startYear: education.startYear,
 					endYear: education.endYear,
 				}, {
-					where: {id: education.id, cvId}
+					where: { id: education.id, cvId }
 				})
 			}
 		}
@@ -307,20 +314,20 @@ const editCv = async (req, res) => {
 				if (skillFound) {
 					await Skill.update({
 						name: skill.nameForEdit
-					},{
+					}, {
 						where: {
-							id: skill.id, 
+							id: skill.id,
 							name: skill.nameToEdit
 						}
 					})
 				} else {
 					const otherSkillFound = await OtherSkill.findOne({ where: { id: skill.id, name: skill.nameToEdit } });
-					if(otherSkillFound){
+					if (otherSkillFound) {
 						await OtherSkill.update({
 							name: skill.nameForEdit
-						},{
+						}, {
 							where: {
-								id: skill.id, 
+								id: skill.id,
 								name: skill.nameToEdit
 							}
 						})
@@ -333,35 +340,35 @@ const editCv = async (req, res) => {
 		// update role of table experience related with cv
 
 		if (role) {
-				const roleFound = await Role.findOne({ where: { id: role.id, name: role.nameToEdit } });
-				if (roleFound) {
-					await Role.update({
+			const roleFound = await Role.findOne({ where: { id: role.id, name: role.nameToEdit } });
+			if (roleFound) {
+				await Role.update({
+					name: role.nameForEdit
+				}, {
+					where: {
+						id: role.id,
+						name: role.nameToEdit
+					}
+				})
+			} else {
+				const otherRoleFound = await OtherRole.findOne({ where: { id: role.id, name: role.nameToEdit } });
+				if (otherRoleFound) {
+					await OtherSkill.update({
 						name: role.nameForEdit
-					},{
+					}, {
 						where: {
-							id: role.id, 
+							id: role.id,
 							name: role.nameToEdit
 						}
 					})
-				} else {
-					const otherRoleFound = await OtherRole.findOne({ where: { id: role.id, name: role.nameToEdit } });
-					if(otherRoleFound){
-						await OtherSkill.update({
-							name: role.nameForEdit
-						},{
-							where: {
-								id: role.id, 
-								name: role.nameToEdit
-							}
-						})
-					}
 				}
+			}
 		}
 
-		
 
-		res.status(200).json({status: true, message: "CV editado correctamente"});
-	
+
+		res.status(200).json({ status: true, message: "CV editado correctamente" });
+
 	} catch (error) {
 		handleError(res, 500, error.message);
 	}
