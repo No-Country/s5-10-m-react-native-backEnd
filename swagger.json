@@ -6,7 +6,10 @@
   },
   "servers": [
     {
-      "url": ["http://localhost:5000","https://mycv-app-back.herokuapp.com/api-docs/"]
+      "url": "http://localhost:5000"
+    },
+    {
+      "url": "https://mycv-app-back.herokuapp.com"
     }
   ],
   "components":{
@@ -456,13 +459,6 @@
         },
         "parameters": [
           {
-            "name": "x-access-token",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "userId",
             "in": "path",
             "schema": {
@@ -743,13 +739,6 @@
           }
         },
         "parameters": [
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "userId",
             "in": "path",
