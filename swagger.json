@@ -1,194 +1,111 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "myCV",
-      "version": "1.0.0"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "myCV",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": ["http://localhost:5000","https://mycv-app-back.herokuapp.com/api-docs/"]
+    }
+  ],
+  "components":{
+    "securitySchemes":{
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-access-token"
+      }
+    }   
+  },
+  "tags": [
+    {
+      "name": "Auth"
     },
-    "servers": [
-      {
-        "url": ["http://localhost:5000", "https://mycv-app-back.herokuapp.com/"]
-      }
-    ],
-    "tags": [
-      {
-        "name": "Auth"
-      }
-    ],
-    "paths": {
-      "/api/register": {
-        "post": {
-          "tags": [
-            "Auth"
-          ],
-          "summary": "Register",
-          "requestBody": {
+    {
+      "name": "cv"
+    },
+    {
+      "name": "skills"
+    },
+    {
+      "name": "roles"
+    }
+  ],
+  "paths": {
+    "/api/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "fullName": "jaziel cejas",
+                  "email": "Usuarsi@gmail.com",
+                  "password": "Mundial1!"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "example": {
-                    "fullName": "jaziel cejas",
-                    "email": "Usuari@gmail.com",
-                    "password": "Mundial1!"
-                  }
+                  "type": "object"
+                },
+                "example": {
+                  "status": true,
+                  "message": "Usuario creado",
+                  "token": "eyJhbGciOiJIUzI1NiJ9.VXN1YXJpQGdtYWlsLmNvbQ.ckl-TH7i6LKZqaCKDGdwIQPffM0qdS11-FuFZ6gGPx4"
                 }
               }
             }
           },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "140"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"8c-xtIGfSVbEuDhF6+up4R+gCAJKSI\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 18:50:26 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
+                "examples": {
+                  "example-0": {
+                    "summary": "register email used",
+                    "value": {
+                      "status": false,
+                      "message": "El usuario ya existe"
+                    }
                   },
-                  "example": {
-                    "status": true,
-                    "message": "Usuario creado",
-                    "token": "eyJhbGciOiJIUzI1NiJ9.VXN1YXJpQGdtYWlsLmNvbQ.ckl-TH7i6LKZqaCKDGdwIQPffM0qdS11-FuFZ6gGPx4"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
-                },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "49"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"31-91Zihcbozk70gW0S+ZGF3sBntMg\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 18:51:10 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  },
-                  "examples": {
-                    "example-0": {
-                      "summary": "register email used",
-                      "value": {
-                        "status": false,
-                        "message": "El usuario ya existe"
-                      }
-                    },
-                    "example-1": {
-                      "summary": "Register missing user data",
-                      "value": {
-                        "status": false,
-                        "message": "Datos inválidos",
-                        "errors": [
-                          {
-                            "msg": "Nombre completo inválido",
-                            "param": "fullName",
-                            "location": "body"
-                          },
-                          {
-                            "msg": "Email inválido",
-                            "param": "email",
-                            "location": "body"
-                          },
-                          {
-                            "msg": "Contraseña inválida",
-                            "param": "password",
-                            "location": "body"
-                          }
-                        ]
-                      }
+                  "example-1": {
+                    "summary": "Register missing user data",
+                    "value": {
+                      "status": false,
+                      "message": "Datos inválidos",
+                      "errors": [
+                        {
+                          "msg": "Nombre completo inválido",
+                          "param": "fullName",
+                          "location": "body"
+                        },
+                        {
+                          "msg": "Email inválido",
+                          "param": "email",
+                          "location": "body"
+                        },
+                        {
+                          "msg": "Contraseña inválida",
+                          "param": "password",
+                          "location": "body"
+                        }
+                      ]
                     }
                   }
                 }
@@ -196,175 +113,75 @@
             }
           }
         }
-      },
-      "/api/login": {
-        "post": {
-          "tags": [
-            "Auth"
-          ],
-          "summary": "login",
-          "requestBody": {
+      }
+    },
+    "/api/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "Usuari@gmail.com",
+                  "password": "Mundial1!"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "example": {
-                    "email": "Usuari@gmail.com",
-                    "password": "Mundial1!"
-                  }
+                  "type": "object"
+                },
+                "example": {
+                  "status": true,
+                  "message": "Inicio de Sesión exitoso!",
+                  "token": "eyJhbGciOiJIUzI1NiJ9.VXN1YXJpQGdtYWlsLmNvbQ.ckl-TH7i6LKZqaCKDGdwIQPffM0qdS11-FuFZ6gGPx4"
                 }
               }
             }
           },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "152"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"98-uYLfQ7eDDo4W+PfzwRfEmDBLEbM\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 19:02:56 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
+                "examples": {
+                  "example-0": {
+                    "summary": "login user data missing",
+                    "value": {
+                      "status": false,
+                      "message": "Datos inválidos",
+                      "errors": [
+                        {
+                          "msg": "Email inválido",
+                          "param": "email",
+                          "location": "body"
+                        },
+                        {
+                          "msg": "Contraseña inválida",
+                          "param": "password",
+                          "location": "body"
+                        }
+                      ]
+                    }
                   },
-                  "example": {
-                    "status": true,
-                    "message": "Inicio de Sesión exitoso!",
-                    "token": "eyJhbGciOiJIUzI1NiJ9.VXN1YXJpQGdtYWlsLmNvbQ.ckl-TH7i6LKZqaCKDGdwIQPffM0qdS11-FuFZ6gGPx4"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
-                },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "185"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"b9-lXxjiPUeQIu8BHfMUriGM202jXY\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 19:02:11 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  },
-                  "examples": {
-                    "example-0": {
-                      "summary": "login user data missing",
-                      "value": {
-                        "status": false,
-                        "message": "Datos inválidos",
-                        "errors": [
-                          {
-                            "msg": "Email inválido",
-                            "param": "email",
-                            "location": "body"
-                          },
-                          {
-                            "msg": "Contraseña inválida",
-                            "param": "password",
-                            "location": "body"
-                          }
-                        ]
-                      }
-                    },
-                    "example-1": {
-                      "summary": "login user doesn't registered",
-                      "value": {
-                        "status": false,
-                        "message": "Los datos no coinciden"
-                      }
+                  "example-1": {
+                    "summary": "login user doesn't registered",
+                    "value": {
+                      "status": false,
+                      "message": "Los datos no coinciden"
                     }
                   }
                 }
@@ -372,472 +189,1433 @@
             }
           }
         }
-      },
-      "/api/forgot_password": {
-        "post": {
-          "tags": [
-            "Auth"
-          ],
-          "summary": "forgot password",
-          "requestBody": {
+      }
+    },
+    "/api/forgot_password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "forgot password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "jazsisds@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "example": {
-                    "email": "jazsisds@gmail.com"
-                  }
+                  "type": "object"
+                },
+                "example": {
+                  "status": true,
+                  "message": "Se ha enviado un email a su correo electrónico"
                 }
               }
             }
           },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
+                "example": {
+                  "status": false,
+                  "message": "Datos inválidos",
+                  "errors": [
+                    {
+                      "msg": "Email inválido",
+                      "param": "email",
+                      "location": "body"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
+                "example": {
+                  "status": false,
+                  "message": "El usuario no se encuentra registrado"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/confirm_token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "confirm token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "resetToken": "123423"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "75"
-                  }
+                "example": {
+                  "status": false,
+                  "message": "Token inválido"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reset_password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "reset password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "password": "NuevaCoaseña1!",
+                  "resetToken": 132132
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"4b-XTvl48QVsm62n5Vir4M71Nph2Ms\""
-                  }
+                "example": {
+                  "status": false,
+                  "message": "Datos inválidos",
+                  "errors": [
+                    {
+                      "msg": "Contraseña inválida",
+                      "param": "password",
+                      "location": "body"
+                    },
+                    {
+                      "msg": "Token inválido",
+                      "param": "resetToken",
+                      "location": "body"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 18:58:34 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
+                "example": {
+                  "status": false,
+                  "message": "No se encontró el usuario, por favor intente nuevamente"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{userId}/create/cv": {
+      "post": {
+        "tags": [
+          "cv"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "create cv",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "fullName": "Cejas Jaziel",
+                  "rol": "Programador Backend",
+                  "phone": "+54 (011) 69690086",
+                  "email": "jaziel.isma@outlook.es",
+                  "portfolio": "asdasdasdsd",
+                  "linkedin": "asdasdasdas",
+                  "github": "asdasdasd",
+                  "address": "Argentina, Buenos Aires",
+                  "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                  "experiences": [
+                    {
+                      "name": "titulo 1",
+                      "role": "asdasd",
+                      "description": "asdasdasdasd",
+                      "startYear": "2022/02/02",
+                      "endYear": "2022/04/04"
+                    },
+                    {
+                      "name": "titulo 2",
+                      "role": "asdasd",
+                      "description": "asdasdasasdasddasd",
+                      "startYear": "2022/02/02",
+                      "endYear": "2022/04/04"
+                    }
+                  ],
+                  "skills": [
+                    {
+                      "name": "titulo 1"
+                    },
+                    {
+                      "name": "titulo 2"
+                    }
+                  ],
+                  "educations": [
+                    {
+                      "title": "titulo 1",
+                      "school": "asdasdasd",
+                      "description": "asdasdasasdasddasd",
+                      "startYear": "2022/02/02",
+                      "endYear": "2022/04/04"
+                    },
+                    {
+                      "title": "titulo 1",
+                      "school": "asdasdasd",
+                      "description": "asdasdasasdasddasd",
+                      "startYear": "2022/02/02",
+                      "endYear": "2022/04/04"
+                    }
+                  ],
+                  "role": "Full stack",
+                  "languages": [
+                    {
+                      "language": "Inglés",
+                      "skill": "basico"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
                 }
               },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  },
-                  "example": {
-                    "status": true,
-                    "message": "Se ha enviado un email a su correo electrónico"
-                  }
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "2166"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"876-ZZpseDl0iLfXW/r/g3R49+Uor68\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Thu, 01 Dec 2022 12:59:48 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
                 }
               }
             },
-            "400": {
-              "description": "Bad Request",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "116"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"74-wr3pai+NpS+3wbAMW4STXtUEXN4\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 18:58:22 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  },
-                  "example": {
-                    "status": false,
-                    "message": "Datos inválidos",
-                    "errors": [
+                "example": {
+                  "status": true,
+                  "message": "CV creado satisfactoriamente!",
+                  "cv": {
+                    "id": 11,
+                    "fullName": "Cejas Jaziel",
+                    "phone": "+54 (011) 69690086",
+                    "email": "jaziel.isma@outlook.es",
+                    "portfolio": "asdasdasdsd",
+                    "linkedin": "asdasdasdas",
+                    "github": "asdasdasd",
+                    "address": "Argentina, Buenos Aires",
+                    "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                    "createdAt": "2022-12-01T12:59:48.000Z",
+                    "updatedAt": "2022-12-01T12:59:48.000Z",
+                    "userId": 2,
+                    "languages": [
                       {
-                        "msg": "Email inválido",
-                        "param": "email",
-                        "location": "body"
+                        "id": 8,
+                        "language": "Inglés",
+                        "skill": "basico",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11
                       }
-                    ]
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
-                },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "66"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"42-qWpyVfBdAs6eMlZM9hgyQmTz8ok\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 18:59:04 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  },
-                  "example": {
-                    "status": false,
-                    "message": "El usuario no se encuentra registrado"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/confirm_token": {
-        "post": {
-          "tags": [
-            "Auth"
-          ],
-          "summary": "confirm token",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "example": {
-                    "resetToken": "123423"
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "401": {
-              "description": "Unauthorized",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
-                },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "44"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"2c-BjuRRhmGWyngvR4QfTKqnHOhrWc\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 19:16:41 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  },
-                  "example": {
-                    "status": false,
-                    "message": "Token inválido"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/reset_password": {
-        "post": {
-          "tags": [
-            "Auth"
-          ],
-          "summary": "reset password",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "example": {
-                    "password": "NuevaCoaseña1!",
-                    "resetToken": 132132
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "400": {
-              "description": "Bad Request",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
-                },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "190"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"be-xvU+kkvqoLdolwpkP1O7fzR/ytM\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 19:00:15 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  },
-                  "example": {
-                    "status": false,
-                    "message": "Datos inválidos",
-                    "errors": [
+                    ],
+                    "projects": [],
+                    "otherRoles": [
                       {
-                        "msg": "Contraseña inválida",
-                        "param": "password",
-                        "location": "body"
+                        "id": 8,
+                        "name": "Full stack",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11,
+                        "curriculumId": null
+                      }
+                    ],
+                    "roles": [],
+                    "otherSkills": [
+                      {
+                        "id": 1,
+                        "name": "titulo 1",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11
                       },
                       {
-                        "msg": "Token inválido",
-                        "param": "resetToken",
-                        "location": "body"
+                        "id": 2,
+                        "name": "titulo 2",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11
+                      }
+                    ],
+                    "skills": [],
+                    "educations": [
+                      {
+                        "id": 21,
+                        "title": "titulo 1",
+                        "school": "asdasdasd",
+                        "description": "asdasdasasdasddasd",
+                        "startYear": "2022-02-02T03:00:00.000Z",
+                        "endYear": "2022-04-04T03:00:00.000Z",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11
+                      },
+                      {
+                        "id": 22,
+                        "title": "titulo 1",
+                        "school": "asdasdasd",
+                        "description": "asdasdasasdasddasd",
+                        "startYear": "2022-02-02T03:00:00.000Z",
+                        "endYear": "2022-04-04T03:00:00.000Z",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11
+                      }
+                    ],
+                    "experiences": [
+                      {
+                        "id": 15,
+                        "name": "titulo 1",
+                        "role": "asdasd",
+                        "description": "asdasdasdasd",
+                        "startYear": "2022-02-02T03:00:00.000Z",
+                        "endYear": "2022-04-04T03:00:00.000Z",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11
+                      },
+                      {
+                        "id": 16,
+                        "name": "titulo 2",
+                        "role": "asdasd",
+                        "description": "asdasdasasdasddasd",
+                        "startYear": "2022-02-02T03:00:00.000Z",
+                        "endYear": "2022-04-04T03:00:00.000Z",
+                        "createdAt": "2022-12-01T12:59:48.000Z",
+                        "updatedAt": "2022-12-01T12:59:48.000Z",
+                        "cvId": 11
                       }
                     ]
                   }
                 }
               }
-            },
-            "404": {
-              "description": "Not Found",
-              "headers": {
-                "X-Powered-By": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Express"
-                  }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 },
-                "Access-Control-Allow-Origin": {
-                  "schema": {
-                    "type": "string",
-                    "example": "*"
-                  }
-                },
-                "Content-Type": {
-                  "schema": {
-                    "type": "string",
-                    "example": "application/json; charset=utf-8"
-                  }
-                },
-                "Content-Length": {
-                  "schema": {
-                    "type": "integer",
-                    "example": "85"
-                  }
-                },
-                "ETag": {
-                  "schema": {
-                    "type": "string",
-                    "example": "W/\"55-migVDMavwjWhahCIS2dtFI6lakk\""
-                  }
-                },
-                "Date": {
-                  "schema": {
-                    "type": "string",
-                    "example": "Sun, 27 Nov 2022 19:01:20 GMT"
-                  }
-                },
-                "Connection": {
-                  "schema": {
-                    "type": "string",
-                    "example": "keep-alive"
-                  }
-                },
-                "Keep-Alive": {
-                  "schema": {
-                    "type": "string",
-                    "example": "timeout=5"
-                  }
-                }
-              },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
+                "examples": {
+                  "example-0": {
+                    "summary": "user not found",
+                    "value": {
+                      "status": false,
+                      "message": "Usuario no encontrado"
+                    }
                   },
-                  "example": {
-                    "status": false,
-                    "message": "No se encontró el usuario, por favor intente nuevamente"
+                  "example-1": {
+                    "summary": "bad data user",
+                    "value": {
+                      "status": false,
+                      "message": "Datos inválidos",
+                      "errors": [
+                        {
+                          "value": [
+                            {
+                              "title": "titulo 1",
+                              "school": "asdasdasd",
+                              "description": "asdasdasasdasddasd"
+                            },
+                            {
+                              "title": "titulo 1",
+                              "school": "asdasdasd",
+                              "description": "asdasdasasdasddasd",
+                              "startYear": "2022/02/02",
+                              "endYear": "2022/04/04"
+                            }
+                          ],
+                          "msg": "Educación inválida",
+                          "param": "educations",
+                          "location": "body"
+                        }
+                      ]
+                    }
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{userId}/edit/cv/{cvId}": {
+      "put": {
+        "tags": [
+          "cv"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "edit cv",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "fullName": "Juaaaasdasdasdasdasan",
+                  "phone": "asdasdasd",
+                  "experiences": [
+                    {
+                      "id": 1,
+                      "name": "nombre pa"
+                    }
+                  ],
+                  "languages": [
+                    {
+                      "id": 1,
+                      "language": "Full stack",
+                      "skill": "basico"
+                    }
+                  ],
+                  "educations": [
+                    {
+                      "id": 1,
+                      "title": "un title"
+                    }
+                  ],
+                  "skills": [
+                    {
+                      "id": 2,
+                      "nameToEdit": "Frontend",
+                      "nameForEdit": "Backend"
+                    }
+                  ],
+                  "role": {
+                    "id": 1,
+                    "nameToEdit": "Full stack",
+                    "nameForEdit": "Camarero"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "cvId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": true,
+                  "message": "CV editado correctamente"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "example-0": {
+                    "summary": "bad data user",
+                    "value": {
+                      "status": false,
+                      "message": "Datos inválidos",
+                      "errors": [
+                        {
+                          "value": [
+                            {
+                              "id": 1,
+                              "language": "Full stack",
+                              "skill": "perro"
+                            }
+                          ],
+                          "msg": "Lenguaje inválido",
+                          "param": "languages",
+                          "location": "body"
+                        }
+                      ]
+                    }
+                  },
+                  "example-1": {
+                    "summary": "cv dont found",
+                    "value": {
+                      "status": false,
+                      "message": "Id de cv o usuario inválido"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{userId}/get/cv": {
+      "get": {
+        "tags": [
+          "cv"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "get cv by userId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": true,
+                  "data": [
+                    {
+                      "id": 2,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 3,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 4,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [],
+                      "languages": [],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": []
+                    },
+                    {
+                      "id": 3,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 5,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 6,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [],
+                      "languages": [],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": []
+                    },
+                    {
+                      "id": 4,
+                      "userId": 1,
+                      "fullName": "Juaaaasdasdasdasdasan",
+                      "phone": "asdasdasd",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 7,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 8,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 1,
+                          "name": "nombre pa",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 2,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 1,
+                          "language": "Full stack",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 1,
+                          "name": "Full stack"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 5,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 9,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 10,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 3,
+                          "name": "titulo 1",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 4,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 2,
+                          "language": "Inglés",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 2,
+                          "name": "Full stack"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 6,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 11,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 12,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 5,
+                          "name": "titulo 1",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 6,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 3,
+                          "language": "Inglés",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 3,
+                          "name": "Full stack"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 7,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 13,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 14,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 7,
+                          "name": "titulo 1",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 8,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 4,
+                          "language": "Inglés",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 4,
+                          "name": "Full stack"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 8,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 15,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 16,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 9,
+                          "name": "titulo 1",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 10,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 5,
+                          "language": "Inglés",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 5,
+                          "name": "Full stack"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 9,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 17,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 18,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 11,
+                          "name": "titulo 1",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 12,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 6,
+                          "language": "Inglés",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 6,
+                          "name": "Full stack"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 10,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 19,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 20,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 13,
+                          "name": "titulo 1",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 14,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 7,
+                          "language": "Inglés",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 7,
+                          "name": "Full stack"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "CV no encontrado"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{userId}/delete/{cvId}": {
+      "delete": {
+        "tags": [
+          "cv"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "delete cv",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "cvId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": true,
+                  "message": "CV eliminado"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "CV no encontrado"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/get/skills": {
+      "get": {
+        "tags": [
+          "skills"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "get all skills",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "QA"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Backend"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/get/roles": {
+      "get": {
+        "tags": [
+          "roles"
+        ],
+          "security": [
+            {
+              "apiKeyAuth":[]
+            }
+          ],
+        "summary": "get all roles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Full stack"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Full stack"
+                  },
+                  {
+                    "id": 3,
+                    "name": "Full stack"
+                  },
+                  {
+                    "id": 4,
+                    "name": "Full stack"
+                  },
+                  {
+                    "id": 5,
+                    "name": "Full stack"
+                  },
+                  {
+                    "id": 6,
+                    "name": "Full stack"
+                  },
+                  {
+                    "id": 7,
+                    "name": "Full stack"
+                  }
+                ]
               }
             }
           }
@@ -845,3 +1623,4 @@
       }
     }
   }
+}
