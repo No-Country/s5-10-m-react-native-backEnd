@@ -71,10 +71,25 @@ const formatEducation = (model) => {
   ]
 }
 
-module.exports = {
-  formatSkillsRoles,
-  formatLanguages,
-  formatProjects,
-  formatExperience,
-  formatEducation
+const formatCv = (cv) => {
+  return {
+    id: cv.id,
+    userId: cv.userId,
+    fullName: cv.fullName,
+    phone: cv.phone,
+    email: cv.email,
+    portfolio: cv.portfolio,
+    linkedin: cv.linkedin,
+    github: cv.github,
+    address: cv.address,
+    aboutMe: cv.aboutMe,
+    education: formatEducation(cv.educations),
+    experience: formatExperience(cv.experiences),
+    languages: formatLanguages(cv.languages),
+    projects: formatProjects(cv.projects),
+    skill: formatSkillsRoles(cv.skills, cv.otherSkills),
+    role: formatSkillsRoles(cv.roles, cv.otherRoles)
+  }
 }
+
+module.exports = formatCv;
