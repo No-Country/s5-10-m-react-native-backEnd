@@ -8,12 +8,12 @@ const OtherSkill = require('../models/OtherSkill');
 const OtherRole = require('../models/OtherRole');
 const Curriculum = require('../models/Curriculum');
 const handleError = require('../helpers/handleError');
-const {
-	formatSkillsRoles,
-	formatLanguages,
-	formatProjects,
-	formatExperience,
-	formatEducation
+const { formatCv
+	// formatSkillsRoles,
+	// formatLanguages,
+	// formatProjects,
+	// formatExperience,
+	// formatEducation
 } = require('../helpers/formatCv');
 
 const createCV = async (req, res) => {
@@ -147,6 +147,37 @@ const createCV = async (req, res) => {
 
 const getCV = async (req, res) => {
 	try {
+		const { userId, cvId } = req.params;
+		const curriculumFound = await Curriculum.findOne({
+			where: { userId, id: cvId },
+			include: [
+				"languages",
+				"projects",
+				"otherRoles",
+				"roles",
+				"otherSkills",
+				"skills",
+				"educations",
+				"experiences"
+			]
+		})
+
+		if (!curriculumFound) {
+			return handleError(res, 400, "CV no encontrado");
+		}
+		
+		if (curriculumFound.id !== Number(cvId)) {
+			return handleError(res, 403, "El CV al que intentas acceder no pertenece al usuario");
+		}
+
+		res.status(200).json({ status: true, data: formatCv(curriculumFound) });
+	} catch (error) {
+		handleError(res, 500, error.message)
+	}
+}
+
+const getCVs = async (req, res) => {
+	try {
 		const { userId } = req.params;
 		const curriculumFound = await Curriculum.findAll({
 			where: { userId },
@@ -168,24 +199,7 @@ const getCV = async (req, res) => {
 
 		const cv = [];
 		for (let i = 0; i < curriculumFound.length; i++) {
-			cv.push({
-				id: curriculumFound[i].id,
-				userId: curriculumFound[i].userId,
-				fullName: curriculumFound[i].fullName,
-				phone: curriculumFound[i].phone,
-				email: curriculumFound[i].email,
-				portfolio: curriculumFound[i].portfolio,
-				linkedin: curriculumFound[i].linkedin,
-				github: curriculumFound[i].github,
-				address: curriculumFound[i].address,
-				aboutMe: curriculumFound[i].aboutMe,
-				education: formatEducation(curriculumFound[i].educations),
-				experience: formatExperience(curriculumFound[i].experiences),
-				languages: formatLanguages(curriculumFound[i].languages),
-				projects: formatProjects(curriculumFound[i].projects),
-				skill: formatSkillsRoles(curriculumFound[i].skills, curriculumFound[i].otherSkills),
-				role: formatSkillsRoles(curriculumFound[i].roles, curriculumFound[i].otherRoles)
-			});
+			cv.push(formatCv(curriculumFound[i]));
 		}
 
 		return res.status(200).json({ status: true, data: cv });
@@ -377,6 +391,7 @@ const editCv = async (req, res) => {
 module.exports = {
 	createCV,
 	getCV,
+	getCVs,
 	deleteCV,
 	editCv
 };
