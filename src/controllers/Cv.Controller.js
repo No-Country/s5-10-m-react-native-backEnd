@@ -8,13 +8,7 @@ const OtherSkill = require('../models/OtherSkill');
 const OtherRole = require('../models/OtherRole');
 const Curriculum = require('../models/Curriculum');
 const handleError = require('../helpers/handleError');
-const { formatCv
-	// formatSkillsRoles,
-	// formatLanguages,
-	// formatProjects,
-	// formatExperience,
-	// formatEducation
-} = require('../helpers/formatCv');
+const formatCv = require('../helpers/formatCv');
 
 const createCV = async (req, res) => {
 	try {

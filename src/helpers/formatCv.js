@@ -92,11 +92,4 @@ const formatCv = (cv) => {
   }
 }
 
-module.exports = {
-  // formatSkillsRoles,
-  // formatLanguages,
-  // formatProjects,
-  // formatExperience,
-  // formatEducation
-  formatCv
-}
+module.exports = formatCv;
