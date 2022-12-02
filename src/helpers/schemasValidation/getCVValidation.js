@@ -1,13 +1,20 @@
 const { checkSchema } = require('express-validator')
 
-const validationGetCv = checkSchema({
+const getCVValidation = checkSchema({
   userId: {
     in: ["params"],
     exists: { options: { checkFalsy: true } },
     bail: true,
-    isString: true,
-    errorMessage: 'Id inválido'
+    isNumeric: true,
+    errorMessage: 'Id usuario inválido'
+  },
+  cvId: {
+    in: ["params"],
+    exists: { options: { checkFalsy: true } },
+    bail: true,
+    isNumeric: true,
+    errorMessage: 'Id cv inválido'
   }
 });
 
-module.exports = validationGetCv
+module.exports = getCVValidation;
