@@ -114,6 +114,20 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
           }
         }
       }
@@ -190,6 +204,20 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
           }
         }
       }
@@ -263,6 +291,20 @@
                 "example": {
                   "status": false,
                   "message": "El usuario no se encuentra registrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
                 }
               }
             }
@@ -375,6 +417,20 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
           }
         }
       }
@@ -470,56 +526,6 @@
         "responses": {
           "200": {
             "description": "OK",
-            "headers": {
-              "X-Powered-By": {
-                "schema": {
-                  "type": "string",
-                  "example": "Express"
-                }
-              },
-              "Access-Control-Allow-Origin": {
-                "schema": {
-                  "type": "string",
-                  "example": "*"
-                }
-              },
-              "Content-Type": {
-                "schema": {
-                  "type": "string",
-                  "example": "application/json; charset=utf-8"
-                }
-              },
-              "Content-Length": {
-                "schema": {
-                  "type": "integer",
-                  "example": "2166"
-                }
-              },
-              "ETag": {
-                "schema": {
-                  "type": "string",
-                  "example": "W/\"876-ZZpseDl0iLfXW/r/g3R49+Uor68\""
-                }
-              },
-              "Date": {
-                "schema": {
-                  "type": "string",
-                  "example": "Thu, 01 Dec 2022 12:59:48 GMT"
-                }
-              },
-              "Connection": {
-                "schema": {
-                  "type": "string",
-                  "example": "keep-alive"
-                }
-              },
-              "Keep-Alive": {
-                "schema": {
-                  "type": "string",
-                  "example": "timeout=5"
-                }
-              }
-            },
             "content": {
               "application/json": {
                 "schema": {
@@ -679,6 +685,20 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
           }
         }
       }
@@ -810,6 +830,20 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
           }
         }
       }
@@ -824,7 +858,7 @@
             "apiKeyAuth":[]
           }
         ],
-        "summary": "get cv by userId",
+        "summary": "get all cv by userId",
         "parameters": [
           {
             "name": "userId",
@@ -846,382 +880,6 @@
                 "example": {
                   "status": true,
                   "data": [
-                    {
-                      "id": 2,
-                      "userId": 1,
-                      "fullName": "Cejas Jaziel",
-                      "phone": "+54 (011) 69690086",
-                      "email": "jaziel.isma@outlook.es",
-                      "portfolio": "asdasdasdsd",
-                      "linkedin": "asdasdasdas",
-                      "github": "asdasdasd",
-                      "address": "Argentina, Buenos Aires",
-                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
-                      "education": [
-                        {
-                          "id": 3,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 4,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "experience": [],
-                      "languages": [],
-                      "projects": [],
-                      "skill": [
-                        {
-                          "id": 1,
-                          "name": "QA"
-                        },
-                        {
-                          "id": 2,
-                          "name": "Backend"
-                        }
-                      ],
-                      "role": []
-                    },
-                    {
-                      "id": 3,
-                      "userId": 1,
-                      "fullName": "Cejas Jaziel",
-                      "phone": "+54 (011) 69690086",
-                      "email": "jaziel.isma@outlook.es",
-                      "portfolio": "asdasdasdsd",
-                      "linkedin": "asdasdasdas",
-                      "github": "asdasdasd",
-                      "address": "Argentina, Buenos Aires",
-                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
-                      "education": [
-                        {
-                          "id": 5,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 6,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "experience": [],
-                      "languages": [],
-                      "projects": [],
-                      "skill": [
-                        {
-                          "id": 1,
-                          "name": "QA"
-                        },
-                        {
-                          "id": 2,
-                          "name": "Backend"
-                        }
-                      ],
-                      "role": []
-                    },
-                    {
-                      "id": 4,
-                      "userId": 1,
-                      "fullName": "Juaaaasdasdasdasdasan",
-                      "phone": "asdasdasd",
-                      "email": "jaziel.isma@outlook.es",
-                      "portfolio": "asdasdasdsd",
-                      "linkedin": "asdasdasdas",
-                      "github": "asdasdasd",
-                      "address": "Argentina, Buenos Aires",
-                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
-                      "education": [
-                        {
-                          "id": 7,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 8,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "experience": [
-                        {
-                          "id": 1,
-                          "name": "nombre pa",
-                          "role": "asdasd",
-                          "description": "asdasdasdasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 2,
-                          "name": "titulo 2",
-                          "role": "asdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "languages": [
-                        {
-                          "id": 1,
-                          "language": "Full stack",
-                          "skill": "basico"
-                        }
-                      ],
-                      "projects": [],
-                      "skill": [
-                        {
-                          "id": 1,
-                          "name": "QA"
-                        },
-                        {
-                          "id": 2,
-                          "name": "Backend"
-                        }
-                      ],
-                      "role": [
-                        {
-                          "id": 1,
-                          "name": "Full stack"
-                        }
-                      ]
-                    },
-                    {
-                      "id": 5,
-                      "userId": 1,
-                      "fullName": "Cejas Jaziel",
-                      "phone": "+54 (011) 69690086",
-                      "email": "jaziel.isma@outlook.es",
-                      "portfolio": "asdasdasdsd",
-                      "linkedin": "asdasdasdas",
-                      "github": "asdasdasd",
-                      "address": "Argentina, Buenos Aires",
-                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
-                      "education": [
-                        {
-                          "id": 9,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 10,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "experience": [
-                        {
-                          "id": 3,
-                          "name": "titulo 1",
-                          "role": "asdasd",
-                          "description": "asdasdasdasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 4,
-                          "name": "titulo 2",
-                          "role": "asdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "languages": [
-                        {
-                          "id": 2,
-                          "language": "Inglés",
-                          "skill": "basico"
-                        }
-                      ],
-                      "projects": [],
-                      "skill": [
-                        {
-                          "id": 1,
-                          "name": "QA"
-                        },
-                        {
-                          "id": 2,
-                          "name": "Backend"
-                        }
-                      ],
-                      "role": [
-                        {
-                          "id": 2,
-                          "name": "Full stack"
-                        }
-                      ]
-                    },
-                    {
-                      "id": 6,
-                      "userId": 1,
-                      "fullName": "Cejas Jaziel",
-                      "phone": "+54 (011) 69690086",
-                      "email": "jaziel.isma@outlook.es",
-                      "portfolio": "asdasdasdsd",
-                      "linkedin": "asdasdasdas",
-                      "github": "asdasdasd",
-                      "address": "Argentina, Buenos Aires",
-                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
-                      "education": [
-                        {
-                          "id": 11,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 12,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "experience": [
-                        {
-                          "id": 5,
-                          "name": "titulo 1",
-                          "role": "asdasd",
-                          "description": "asdasdasdasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 6,
-                          "name": "titulo 2",
-                          "role": "asdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "languages": [
-                        {
-                          "id": 3,
-                          "language": "Inglés",
-                          "skill": "basico"
-                        }
-                      ],
-                      "projects": [],
-                      "skill": [
-                        {
-                          "id": 1,
-                          "name": "QA"
-                        },
-                        {
-                          "id": 2,
-                          "name": "Backend"
-                        }
-                      ],
-                      "role": [
-                        {
-                          "id": 3,
-                          "name": "Full stack"
-                        }
-                      ]
-                    },
-                    {
-                      "id": 7,
-                      "userId": 1,
-                      "fullName": "Cejas Jaziel",
-                      "phone": "+54 (011) 69690086",
-                      "email": "jaziel.isma@outlook.es",
-                      "portfolio": "asdasdasdsd",
-                      "linkedin": "asdasdasdas",
-                      "github": "asdasdasd",
-                      "address": "Argentina, Buenos Aires",
-                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
-                      "education": [
-                        {
-                          "id": 13,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 14,
-                          "title": "titulo 1",
-                          "school": "asdasdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "experience": [
-                        {
-                          "id": 7,
-                          "name": "titulo 1",
-                          "role": "asdasd",
-                          "description": "asdasdasdasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        },
-                        {
-                          "id": 8,
-                          "name": "titulo 2",
-                          "role": "asdasd",
-                          "description": "asdasdasasdasddasd",
-                          "startYear": "2022-02-02T03:00:00.000Z",
-                          "endYear": "2022-04-04T03:00:00.000Z"
-                        }
-                      ],
-                      "languages": [
-                        {
-                          "id": 4,
-                          "language": "Inglés",
-                          "skill": "basico"
-                        }
-                      ],
-                      "projects": [],
-                      "skill": [
-                        {
-                          "id": 1,
-                          "name": "QA"
-                        },
-                        {
-                          "id": 2,
-                          "name": "Backend"
-                        }
-                      ],
-                      "role": [
-                        {
-                          "id": 4,
-                          "name": "Full stack"
-                        }
-                      ]
-                    },
                     {
                       "id": 8,
                       "userId": 1,
@@ -1456,6 +1114,182 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{userId}/get/{cvId}": {
+      "get": {
+        "tags": [
+          "cv"
+        ],
+        "security": [
+          {
+            "apiKeyAuth":[]
+          }
+        ],
+        "summary": "get cv by userId and cvId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "cvId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": true,
+                  "data": [
+                    {
+                      "id": 10,
+                      "userId": 1,
+                      "fullName": "Cejas Jaziel",
+                      "phone": "+54 (011) 69690086",
+                      "email": "jaziel.isma@outlook.es",
+                      "portfolio": "asdasdasdsd",
+                      "linkedin": "asdasdasdas",
+                      "github": "asdasdasd",
+                      "address": "Argentina, Buenos Aires",
+                      "aboutMe": "about me noasdasdiohioshdsgfakdj sk kjashd kjasdh ajksdhashd aksdh aksdh aksdhkas jhdkaj shdkajsh dkash dkasjdh aksdhjka shdk ahsdkjahsdk ahsdk ahsdk haskdh askdh askdh aksdh aksjdh aksjdh aksjdh aksjdh ",
+                      "education": [
+                        {
+                          "id": 19,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 20,
+                          "title": "titulo 1",
+                          "school": "asdasdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "experience": [
+                        {
+                          "id": 13,
+                          "name": "titulo 1",
+                          "role": "asdasd",
+                          "description": "asdasdasdasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        },
+                        {
+                          "id": 14,
+                          "name": "titulo 2",
+                          "role": "asdasd",
+                          "description": "asdasdasasdasddasd",
+                          "startYear": "2022-02-02T03:00:00.000Z",
+                          "endYear": "2022-04-04T03:00:00.000Z"
+                        }
+                      ],
+                      "languages": [
+                        {
+                          "id": 7,
+                          "language": "Inglés",
+                          "skill": "basico"
+                        }
+                      ],
+                      "projects": [],
+                      "skill": [
+                        {
+                          "id": 1,
+                          "name": "QA"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Backend"
+                        }
+                      ],
+                      "role": [
+                        {
+                          "id": 7,
+                          "name": "Full stack"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "CV no encontrado"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "El CV al que intentas acceder no pertenece al usuario"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
           }
         }
       }
@@ -1517,6 +1351,20 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
+              }
+            }
           }
         }
       }
@@ -1550,6 +1398,20 @@
                     "name": "Backend"
                   }
                 ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
               }
             }
           }
@@ -1605,6 +1467,20 @@
                     "name": "Full stack"
                   }
                 ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": false,
+                  "message": "Ocurrió un error, inténtelo mas tarde"
+                }
               }
             }
           }
